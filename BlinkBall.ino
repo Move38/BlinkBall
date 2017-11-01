@@ -31,7 +31,7 @@ void loop() {
   if(hasBall) {
     // handle ball internally
     setFaceColor(ballFace, RED); 
-    if(!justReceived) {
+    if(!justReceived && (millis() - timeLastBounce) > (bounceTime - handshakeDuration) ) {
       irSendData(ballFace, 1);
     }
     if(getNeighborState(ballFace) == 2) {
@@ -67,6 +67,7 @@ void loop() {
             irSendData(x, 3);
             hasBall = true;
             justReceived = true;
+            timeLastBounce = millis();
             ballFace = x;       
           }
         }
